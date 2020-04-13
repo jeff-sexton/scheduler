@@ -9,6 +9,9 @@ import Button from "components/Button";
 import DayListItem from 'components/DayListItem';
 import DayList from 'components/DayList';
 
+import '../src/components/InterviewerList/InterviewerListItem/InterviewerListItem.story';
+import '../src/components/InterviewerList/InterviewerList.story';
+
 
 storiesOf("Button", module)
   .addParameters({
