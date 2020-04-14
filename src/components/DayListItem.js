@@ -3,7 +3,7 @@ import './DayListItem.scss';
 
 import classNames from 'classnames';
 
-export default function DayListItem({name, spots, selected, setDay}) {
+export default function DayListItem({name, spots, selected, onChange}) {
   const dayClass = classNames({
     'day-list__item': true,
     'day-list__item--selected': selected,
@@ -29,7 +29,7 @@ export default function DayListItem({name, spots, selected, setDay}) {
   return (
     <li 
       className={dayClass}
-      onClick={setDay}>
+      onClick={onChange}>
         <h2 className="text--regular">{name}</h2> 
         <h3 className="text--light">{formatSpots(spots)}</h3>
     </li>
