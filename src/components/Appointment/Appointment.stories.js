@@ -10,12 +10,21 @@ import Show from './Show';
 import Confirm from './Confirm';
 import Status from './Status';
 import Error from './Error';
+import Form from './Form';
 
 const interviewer = {
   id: 1,
   name: "Sylvia Palmer",
   avatar: "https://i.imgur.com/LpaY82x.png"
 };
+
+const interviewers = [
+  { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
+  { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
+  { id: 3, name: "Mildred Nazir", avatar: "https://i.imgur.com/T2WwVfS.png" },
+  { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
+  { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" }
+];
 
 storiesOf('Appointment', module)
 .addParameters({
@@ -64,4 +73,21 @@ storiesOf('Appointment', module)
     message='Could not delete appointment.'
     onClose={action('onClose')}
   />
-));
+))
+.add('Edit Form', () => (
+  <Form 
+    name={interviewers[3].name}
+    interviewers={interviewers}
+    value={3}
+    onSave={action("onSave")}
+    onCancel={action("onCancel")}
+  />
+))
+.add('Create Form', () => (
+  <Form 
+    interviewers={interviewers}
+    onSave={action("onSave")}
+    onCancel={action("onCancel")}
+  />
+))
+;
