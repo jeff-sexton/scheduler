@@ -5,7 +5,6 @@ import './styles.scss';
 import Header from './header';
 import Show from './Show';
 import Empty from './Empty';
-import InterviewerList from 'components/InterviewerList';
 
 const Appointment = ({id, time, interview}) => {
 
