@@ -11,7 +11,7 @@ const Appointment = ({id, time, interview}) => {
   return (
     <article className="appointment">
       <Header time={time}/>
-      {interview ? <Show student={interview.student} interviewer={interview.interviewer}/> : <Empty />}
+      {interview ? <Show {...interview}/> : <Empty />}
     </article>
   )
 };
