@@ -9,6 +9,7 @@ import Empty from './Empty';
 import Show from './Show';
 import Confirm from './Confirm';
 import Status from './Status';
+import Error from './Error';
 
 const interviewer = {
   id: 1,
@@ -58,4 +59,9 @@ storiesOf('Appointment', module)
     message='Deleting'
   />
 ))
-;
+.add('Error', () => (
+  <Error 
+    message='Could not delete appointment.'
+    onClose={action('onClose')}
+  />
+));
