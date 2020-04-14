@@ -8,6 +8,7 @@ import Header from './header';
 import Empty from './Empty';
 import Show from './Show';
 import Confirm from './Confirm';
+import Status from './Status';
 
 const interviewer = {
   id: 1,
@@ -45,6 +46,16 @@ storiesOf('Appointment', module)
     message='Delete the appointment?'
     onConfirm={action("onConfirm")}
     onCancel={action("onCancel")}
+  />
+))
+.add('Status Saving', () => (
+  <Status 
+    message='Saving'
+  />
+))
+.add('Status Deleting', () => (
+  <Status 
+    message='Deleting'
   />
 ))
 ;
