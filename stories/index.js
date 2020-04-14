@@ -13,6 +13,7 @@ import '../src/components/DayList/DayList.story';
 import '../src/components/InterviewerList/InterviewerListItem/InterviewerListItem.story';
 import '../src/components/InterviewerList/InterviewerList.story';
 
+import '../src/components/Appointment/Appointment.story';
 
 storiesOf("Button", module)
   .addParameters({
