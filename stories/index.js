@@ -7,13 +7,13 @@ import "index.scss";
 
 import Button from "components/Button";
 
-import '../src/components/DayListItem/DayListItem.story';
-import '../src/components/DayList/DayList.story';
+import '../src/components/DayListItem/DayListItem.stories';
+import '../src/components/DayList/DayList.stories';
 
-import '../src/components/InterviewerList/InterviewerListItem/InterviewerListItem.story';
-import '../src/components/InterviewerList/InterviewerList.story';
+import '../src/components/InterviewerList/InterviewerListItem/InterviewerListItem.stories';
+import '../src/components/InterviewerList/InterviewerList.stories';
 
-import '../src/components/Appointment/Appointment.story';
+import '../src/components/Appointment/Appointment.stories';
 
 storiesOf("Button", module)
   .addParameters({
