@@ -3,7 +3,7 @@ import React from 'react';
 import DayListItem from './DayListItem';
 
 
-export default function DayList({days, value, onChange}) {
+const DayList = ({days, value, onChange}) => {
 
   const dayList = days.map(item => {
     return <DayListItem 
@@ -23,3 +23,5 @@ export default function DayList({days, value, onChange}) {
   )
 
 };
+
+export default DayList;

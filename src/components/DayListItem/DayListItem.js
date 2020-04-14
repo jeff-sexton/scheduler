@@ -2,8 +2,7 @@ import React from "react";
 import './DayListItem.scss';
 
 import classNames from 'classnames';
-
-export default function DayListItem({name, spots, selected, onChange}) {
+const DayListItem = ({name, spots, selected, onChange}) => {
   const dayClass = classNames({
     'day-list__item': true,
     'day-list__item--selected': selected,
@@ -23,7 +22,7 @@ export default function DayListItem({name, spots, selected, onChange}) {
     }
     
     return spotsString;
-    // spots <= 0 ? 'no spots remaining' : spots === 1 ? `${spots} spot remaining` : `${spots} spots remaining`
+    // return spots <= 0 ? 'no spots remaining' : spots === 1 ? `${spots} spot remaining` : `${spots} spots remaining`
   }
   
   return (
@@ -35,3 +34,6 @@ export default function DayListItem({name, spots, selected, onChange}) {
     </li>
   );
 }
+
+
+export default DayListItem;
