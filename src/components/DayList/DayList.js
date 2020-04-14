@@ -1,6 +1,6 @@
 import React from 'react';
 
-import DayListItem from './DayListItem';
+import DayListItem from '../DayListItem';
 
 
 const DayList = ({days, value, onChange}) => {
