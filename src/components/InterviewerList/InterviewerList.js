@@ -10,6 +10,7 @@ const InterviewerList = ({interviewers, value, onChange}) => {
   const interviewersList = interviewers.map(item => {
     return <InterviewerListItem 
       key={item.id}
+      name={item.name}
       avatar={item.avatar}
       selected={item.id === value}
       onChange={() => onChange(item.id)}
