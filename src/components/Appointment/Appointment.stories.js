@@ -7,6 +7,7 @@ import Appointment from './index';
 import Header from './header';
 import Empty from './Empty';
 import Show from './Show';
+import Confirm from './Confirm';
 
 const interviewer = {
   id: 1,
@@ -37,6 +38,13 @@ storiesOf('Appointment', module)
     interviewer={interviewer}
     onEdit={action("onEdit")}
     onDelete={action("onDelete")}
+  />
+))
+.add('Confirm', () => (
+  <Confirm 
+    message='Delete the appointment?'
+    onConfirm={action("onConfirm")}
+    onCancel={action("onCancel")}
   />
 ))
 ;
