@@ -5,7 +5,7 @@ import './InterviewerListItem.scss'
 
 
 
-const InterviewerListItem = ({name, avatar, selected, setInterviewer}) => {
+const InterviewerListItem = ({name, avatar, selected, onChange}) => {
 
   const interviewerClass = classNames({
     'interviewers__item': true,
@@ -13,7 +13,7 @@ const InterviewerListItem = ({name, avatar, selected, setInterviewer}) => {
   });
 
   return (
-    <li className={interviewerClass} onClick={setInterviewer}>
+    <li className={interviewerClass} onClick={onChange}>
       <img
         className="interviewers__item-image"
         src={avatar}
