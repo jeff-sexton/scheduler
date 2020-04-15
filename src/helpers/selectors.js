@@ -10,3 +10,13 @@ const getAppointmentsForDay = (state, targetDay) => {
 };
 
 export { getAppointmentsForDay };
+
+const getInterview = (state, interview) => {
+  if (interview) {
+    return { ...interview, interviewer: { ...state.interviewers[interview.interviewer] } };
+  }
+  
+  return null;
+};
+
+export { getInterview };
