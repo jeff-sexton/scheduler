@@ -20,3 +20,14 @@ const getInterview = (state, interview) => {
 };
 
 export { getInterview };
+
+const getInterviewersForDay = (state, targetDay) => {
+  for (const day of state.days) {
+    if (day.name === targetDay) {
+      return day.interviewers.map(interviewer => state.interviewers[interviewer]);
+    }
+  }
+  return [];
+};
+
+export { getInterviewersForDay };
