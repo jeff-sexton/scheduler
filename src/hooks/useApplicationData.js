@@ -79,6 +79,19 @@ const useApplicationData = () => {
       });
     })
   };
+
+    // const getUpdatedDays = ({state, appointmentId, step}) => {
+
+  //   return state.days.map(day => 
+  //     {
+  //       if(day.appointments.includes(appointmentId)) {
+  //         // const newSpots = add ? Math.max(day.spots - 1, 0) : Math.min(day.spots + 1, 5); 
+  //         return {...day, appointments: [...day.appointments], interviewers: [...day.interviewers], spots: day.spots + step };
+  //       }
+  //       return {...day, appointments: [...day.appointments], interviewers: [...day.interviewers]};
+  //     }
+  //   );
+  // };
   
   const bookInterview = (id, interview) => {
     const appointment = {
