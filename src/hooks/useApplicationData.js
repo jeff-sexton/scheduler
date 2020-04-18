@@ -49,9 +49,24 @@ const useApplicationData = () => {
       interviewers: {}
     }
   );
+
+  // Establish client websockets connection with api server
+  useEffect(() => {
+    const apiSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL, 'JSON');
+
+    apiSocket.onopen = function (event) {
+      apiSocket.send("ping"); 
+    };
+
+    apiSocket.onmessage = function (event) {
+      console.log('Message Received: ', event.data);
+      console.log('Parsed: ', JSON.parse(event.data));
+
+    }
+    
+  }, []);
   
-  const setDay = day => dispatch({type: SET_DAY, value: day });
-  
+  // Get initial applicaion data from api server
   useEffect(()=> {
     const daysPromise = axios.get(`/api/days`);
     const appointmentsPromise = axios.get(`/api/appointments`);
@@ -66,6 +81,10 @@ const useApplicationData = () => {
     });
   },[]);
 
+  // Update day selection fron user input
+  const setDay = day => dispatch({type: SET_DAY, value: day });
+
+  // hangle appointment updates with the api server
   const updateAppointment = (appointment, method) => {
 
   return axios[method](`/api/appointments/${appointment.id}`, appointment)
@@ -93,6 +112,7 @@ const useApplicationData = () => {
   //   );
   // };
   
+  // Update the interview in an appointment slot - either create a new appointment or update an existing one
   const bookInterview = (id, interview) => {
     const appointment = {
       ...state.appointments[id],
@@ -102,6 +122,7 @@ const useApplicationData = () => {
     return updateAppointment(appointment, 'put');
     };
 
+  // Remove the interview in an appointment slot
   const cancelInterview = (id) => {
     const appointment = {
       ...state.appointments[id],
