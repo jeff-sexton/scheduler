@@ -13,6 +13,7 @@ import Confirm from './Confirm';
 import Error from './Error';
 
 const Appointment = ({id, time, interview, interviewers, bookInterview, cancelInterview}) => {
+
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = 'CREATE';
@@ -27,46 +28,29 @@ const Appointment = ({id, time, interview, interviewers, bookInterview, cancelIn
 
   const [ errorMsg, setErrorMessage ] = useState('');
 
-  // useEffect(() => {
-  //   const correctMode = interview ? SHOW : EMPTY;
-  //   if (mode !== correctMode) {
-  //     transition(correctMode);
-  //   }
+  useEffect(() => {
+  if (interview && (mode === EMPTY || mode === SAVING)) {
+    transition(SHOW);
+  }
+  if (interview === null && (mode === SHOW || mode === DELETING)) {
+    transition(EMPTY);
+  }
 
-  // },[interview]);
+  // Set up error display for webSocket timeout
+  let waitForWebSocket;
 
-  // useEffect(() => {
-  //   transition(interview ? SHOW : EMPTY);
+  if ( mode === SAVING || mode === DELETING) {
+    waitForWebSocket = setTimeout( () => {
+      setErrorMessage('Server Response took too long');
+      transition(mode === SAVING ? ERROR_SAVE : ERROR_DELETE);
+    }, 3000);
+  }
 
-  // },[interview]);
+  const cleanup = () => clearTimeout(waitForWebSocket);
 
-  // useEffect(() => {
-  //   if (interview && mode === EMPTY) {
-  //    transition(SHOW);
-  //   }
-  //   if (interview === null && mode === SHOW) {
-  //    transition(EMPTY);
-  //   }
-  //  }, [interview, transition, mode]);
+  return cleanup;
 
-   useEffect(() => {
-    if (interview && (mode === EMPTY || mode === SAVING)) {
-     transition(SHOW);
-    }
-    if (interview === null && (mode === SHOW || mode === DELETING)) {
-     transition(EMPTY);
-    }
-   }, [interview, transition, mode]);
-
-  // useEffect(() => {
-  //   if (interview && mode !== SHOW) {
-  //    transition(SHOW);
-  //   }
-  //   if (interview === null && mode !== EMPTY) {
-  //    transition(EMPTY);
-  //   }
-  //  }, [interview, transition, mode]);
-  
+  }, [interview, transition, mode]);
 
   const save = (name, interviewer) => {
     transition(SAVING);
@@ -76,9 +60,6 @@ const Appointment = ({id, time, interview, interviewers, bookInterview, cancelIn
     };
 
     bookInterview(id, interview)
-      .then(() => {
-        // transition(SHOW);
-      })
       .catch(err => {
         setErrorMessage(err.message);
         transition(ERROR_SAVE, true);
@@ -88,15 +69,11 @@ const Appointment = ({id, time, interview, interviewers, bookInterview, cancelIn
   const deleteInterview = () => {
     transition(DELETING, true);
     cancelInterview(id)
-      .then(() => {
-        // transition(EMPTY);
-      })
       .catch(err => {
         setErrorMessage(err.message);
         transition(ERROR_DELETE, true);
       });
   };
-
 
   return (
     <article className="appointment">
