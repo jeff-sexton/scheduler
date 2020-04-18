@@ -5,20 +5,20 @@ const SET_DAY = 'SET_DAY';
 const SET_APPLICATION_DATA = 'SET_APPLICATION_DATA';
 const SET_INTERVIEW = "SET_INTERVIEW";
 
+
 const reducer = (state, action) => {
 
-  const SET_DAY = ({value: day}) => ({...state, day });
-
+  const SET_DAY = ({value: {day}}) => ({...state, day });
   const SET_APPLICATION_DATA = ({value}) => ({...state, ...value });
-
-  const SET_INTERVIEW = ({value : {days, appointment}}) => {
+  const SET_INTERVIEW = ({value : {id, interview, days}}) => {
     const appointments = {
       ...state.appointments,
-      [appointment.id]: appointment
+      [id]: { ...state.appointments[id], interview }
     };
-
-    return { ...state, days, appointments };
+  
+    return { ...state, appointments, days };
   };
+
   
   const DEFAULT = () => {
     throw new Error(
@@ -59,9 +59,13 @@ const useApplicationData = () => {
     };
 
     apiSocket.onmessage = function (event) {
-      console.log('Message Received: ', event.data);
-      console.log('Parsed: ', JSON.parse(event.data));
+      const {type, id, interview} = JSON.parse(event.data);
 
+      // respond to websocket interview update
+      if (type === SET_INTERVIEW) {
+        updateDays()
+          .then(days => dispatch({type: SET_INTERVIEW, value: {id, interview, days}}));
+      }
     }
     
   }, []);
@@ -82,54 +86,58 @@ const useApplicationData = () => {
   },[]);
 
   // Update day selection fron user input
-  const setDay = day => dispatch({type: SET_DAY, value: day });
+  const setDay = day => dispatch({type: SET_DAY, value: {day} });
 
-  // hangle appointment updates with the api server
-  const updateAppointment = (appointment, method) => {
-
-  return axios[method](`/api/appointments/${appointment.id}`, appointment)
-    .then(() => {
-      return axios.get('/api/days');
-    })
-    .then(({data: days}) => {
-      dispatch({ 
-        type: SET_INTERVIEW, 
-        value: {appointment, days}
-      });
-    })
+  const updateDays = () => {
+    return axios.get('/api/days')
+      .then(({data: days}) => days );
   };
 
-    // const getUpdatedDays = ({state, appointmentId, step}) => {
-
-  //   return state.days.map(day => 
-  //     {
-  //       if(day.appointments.includes(appointmentId)) {
-  //         // const newSpots = add ? Math.max(day.spots - 1, 0) : Math.min(day.spots + 1, 5); 
-  //         return {...day, appointments: [...day.appointments], interviewers: [...day.interviewers], spots: day.spots + step };
-  //       }
-  //       return {...day, appointments: [...day.appointments], interviewers: [...day.interviewers]};
-  //     }
-  //   );
-  // };
+  const calcUpdatedDays = ({id, step}) => {
   
-  // Update the interview in an appointment slot - either create a new appointment or update an existing one
-  const bookInterview = (id, interview) => {
+    return state.days.map(day => 
+      {
+        if(day.appointments.includes(id)) {
+          return {...day, appointments: [...day.appointments], interviewers: [...day.interviewers], spots: day.spots + step };
+        }
+        return {...day, appointments: [...day.appointments], interviewers: [...day.interviewers]};
+      }
+    );
+  };
+
+  // hangle appointment updates with the api server
+  const updateAppointment = (id, interview = null, method) => {
     const appointment = {
       ...state.appointments[id],
-      interview: { ...interview }
+      interview
     }
 
-    return updateAppointment(appointment, 'put');
+    return axios[method](`/api/appointments/${appointment.id}`, appointment)
+      // local spots calculation
+      // .then(() => {
+      //   const days = interview ? calcUpdatedDays(id, -1) : calcUpdatedDays(id, +1);
+      //   dispatch({type: SET_INTERVIEW, value: {id, interview, days}});
+      // })
+
+
+      // do we need to dispatch here if we expect a websocket response??
+
+      // .then(() => {
+      //   return updateDays();
+      // })
+      // .then(days => dispatch({type: SET_INTERVIEW, value: {id, interview, days}}));
+  };
+
+  // Update the interview in an appointment slot - either create a new appointment or update an existing one
+  const bookInterview = (id, interview) => {
+
+    return updateAppointment(id, interview, 'put');
     };
 
   // Remove the interview in an appointment slot
   const cancelInterview = (id) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    }
 
-    return updateAppointment(appointment, 'delete');
+    return updateAppointment(id, null, 'delete');
   };
 
   return { state, setDay, bookInterview, cancelInterview };

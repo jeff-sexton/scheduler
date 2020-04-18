@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './styles.scss';
 
@@ -27,6 +27,47 @@ const Appointment = ({id, time, interview, interviewers, bookInterview, cancelIn
 
   const [ errorMsg, setErrorMessage ] = useState('');
 
+  // useEffect(() => {
+  //   const correctMode = interview ? SHOW : EMPTY;
+  //   if (mode !== correctMode) {
+  //     transition(correctMode);
+  //   }
+
+  // },[interview]);
+
+  // useEffect(() => {
+  //   transition(interview ? SHOW : EMPTY);
+
+  // },[interview]);
+
+  // useEffect(() => {
+  //   if (interview && mode === EMPTY) {
+  //    transition(SHOW);
+  //   }
+  //   if (interview === null && mode === SHOW) {
+  //    transition(EMPTY);
+  //   }
+  //  }, [interview, transition, mode]);
+
+   useEffect(() => {
+    if (interview && (mode === EMPTY || mode === SAVING)) {
+     transition(SHOW);
+    }
+    if (interview === null && (mode === SHOW || mode === DELETING)) {
+     transition(EMPTY);
+    }
+   }, [interview, transition, mode]);
+
+  // useEffect(() => {
+  //   if (interview && mode !== SHOW) {
+  //    transition(SHOW);
+  //   }
+  //   if (interview === null && mode !== EMPTY) {
+  //    transition(EMPTY);
+  //   }
+  //  }, [interview, transition, mode]);
+  
+
   const save = (name, interviewer) => {
     transition(SAVING);
     const interview = {
@@ -36,7 +77,7 @@ const Appointment = ({id, time, interview, interviewers, bookInterview, cancelIn
 
     bookInterview(id, interview)
       .then(() => {
-        transition(SHOW);
+        // transition(SHOW);
       })
       .catch(err => {
         setErrorMessage(err.message);
@@ -48,7 +89,7 @@ const Appointment = ({id, time, interview, interviewers, bookInterview, cancelIn
     transition(DELETING, true);
     cancelInterview(id)
       .then(() => {
-        transition(EMPTY);
+        // transition(EMPTY);
       })
       .catch(err => {
         setErrorMessage(err.message);
@@ -60,7 +101,7 @@ const Appointment = ({id, time, interview, interviewers, bookInterview, cancelIn
   return (
     <article className="appointment">
       <Header time={time}/>
-      {mode === SHOW && <Show {...interview} onDelete={() => {transition(CONFIRM)}} onEdit={() => {transition(EDIT)}}/>}
+      {mode === SHOW && interview && <Show {...interview} onDelete={() => {transition(CONFIRM)}} onEdit={() => {transition(EDIT)}}/>}
       {mode === EMPTY && <Empty onAdd={() => {transition(CREATE)}}/>}
       {mode === CREATE && <Form interviewers={interviewers} onSave={save} onCancel={() => {back()}} />}
       {mode === EDIT && <Form name={interview.student} value={interview.interviewer.id} interviewers={interviewers} onSave={save} onCancel={() => {back()}} />}
