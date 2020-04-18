@@ -39,6 +39,7 @@ const reducer = (state, action) => {
 
 const useApplicationData = () => {
 
+  // Determine intital selected day for user - either current weekday or Monday if it is currently a weekend
   const todaysWeekday = Intl.DateTimeFormat('en-US', { weekday: 'long'}).format(Date.now());
   const selectedWeekday = todaysWeekday === 'Saturday' || todaysWeekday === 'Sunday' ? 'Monday' : todaysWeekday ;
 
