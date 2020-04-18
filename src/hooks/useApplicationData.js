@@ -40,11 +40,12 @@ const reducer = (state, action) => {
 const useApplicationData = () => {
 
   const todaysWeekday = Intl.DateTimeFormat('en-US', { weekday: 'long'}).format(Date.now());
+  const selectedWeekday = todaysWeekday === 'Saturday' || todaysWeekday === 'Sunday' ? 'Monday' : todaysWeekday ;
 
   const [state, dispatch] = useReducer(reducer,
     {
       days: [],
-      day: todaysWeekday,
+      day: selectedWeekday,
       appointments: {},
       interviewers: {}
     }
