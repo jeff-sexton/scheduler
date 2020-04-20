@@ -69,8 +69,41 @@ const get = jest.fn((url) => {
   return (lookup[url] && response) || Promise.reject();
 });
 
+const put = jest.fn( (url, payload) => {
+  console.log('payload', payload);
+  const { id, interview } = payload;
+
+  const response = JSON.stringify({
+    type: "SET_INTERVIEW",
+    id,
+    interview
+  })
+
+  console.log('response', response);
+  setTimeout(() => {
+    // do something with websockets
+
+  }, 2000)
+
+  // function updateAppointment(id, interview) {
+  //   wss.clients.forEach(function eachClient(client) {
+  //     if (client.readyState === WebSocket.OPEN) {
+  //       client.send(
+  //         JSON.stringify({
+  //           type: "SET_INTERVIEW",
+  //           id,
+  //           interview
+  //         })
+  //       );
+  //     }
+  //   });
+  // }
+  return Promise.resolve({ status: 204, statusText: "No Content" });
+});
+
 const axios = {
   get,
+  put,
 };
 
 export default axios;
