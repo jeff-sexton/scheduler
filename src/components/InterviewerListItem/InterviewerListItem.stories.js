@@ -1,20 +1,21 @@
+/* istanbul ignore file */
+
 import React from "react";
 
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 
-import InterviewerListItem from './InterviewerListItem'
-
+import InterviewerListItem from "./InterviewerListItem";
 
 const interviewer = {
   id: 1,
   name: "Sylvia Palmer",
-  avatar: "https://i.imgur.com/LpaY82x.png"
+  avatar: "https://i.imgur.com/LpaY82x.png",
 };
 
 storiesOf("InterviewerListItem", module)
   .addParameters({
-    backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
+    backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
   })
   .add("Unselected", () => (
     <InterviewerListItem
@@ -33,9 +34,9 @@ storiesOf("InterviewerListItem", module)
   ))
   .add("Clickable", () => (
     <InterviewerListItem
-    id={interviewer.id}
-    name={interviewer.name}
-    avatar={interviewer.avatar}
-    onChange={event => action("onChange")(interviewer.id)}
-  />
+      id={interviewer.id}
+      name={interviewer.name}
+      avatar={interviewer.avatar}
+      onChange={(event) => action("onChange")(interviewer.id)}
+    />
   ));

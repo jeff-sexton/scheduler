@@ -1,9 +1,11 @@
-import React from 'react';
+/* istanbul ignore file */
 
-import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
+import React from "react";
 
-import DayList from './index';
+import { storiesOf } from "@storybook/react";
+import { action } from "@storybook/addon-actions";
+
+import DayList from "./index";
 
 const days = [
   {

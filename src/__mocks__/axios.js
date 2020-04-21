@@ -1,3 +1,7 @@
+import WS from "jest-websocket-mock";
+
+const server = new WS("ws://localhost:8080");
+
 const fixtures = {
   days: [
     {
@@ -69,35 +73,24 @@ const get = jest.fn((url) => {
   return (lookup[url] && response) || Promise.reject();
 });
 
-const put = jest.fn( (url, payload) => {
-  console.log('payload', payload);
+const put = jest.fn((url, payload) => {
+  // Update day spots
+  fixtures.days[0].spots -= 1;
+
   const { id, interview } = payload;
 
   const response = JSON.stringify({
     type: "SET_INTERVIEW",
     id,
-    interview
-  })
+    interview,
+  });
 
-  console.log('response', response);
   setTimeout(() => {
+    server.send(response);
+    WS.clean();
     // do something with websockets
+  }, 2000);
 
-  }, 2000)
-
-  // function updateAppointment(id, interview) {
-  //   wss.clients.forEach(function eachClient(client) {
-  //     if (client.readyState === WebSocket.OPEN) {
-  //       client.send(
-  //         JSON.stringify({
-  //           type: "SET_INTERVIEW",
-  //           id,
-  //           interview
-  //         })
-  //       );
-  //     }
-  //   });
-  // }
   return Promise.resolve({ status: 204, statusText: "No Content" });
 });
 
