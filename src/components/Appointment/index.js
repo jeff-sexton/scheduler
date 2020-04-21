@@ -55,7 +55,7 @@ const Appointment = ({
         transition(SHOW);
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setErrorMessage(err && err.message || 'Whoops');
         transition(ERROR_SAVE, true);
       });
   };
@@ -67,7 +67,7 @@ const Appointment = ({
         transition(EMPTY);
       })
       .catch((err) => {
-        setErrorMessage(err.message);
+        setErrorMessage(err && err.message || 'Whoops');
         transition(ERROR_DELETE, true);
       });
   };
