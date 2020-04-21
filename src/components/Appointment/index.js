@@ -35,26 +35,12 @@ const Appointment = ({
   const [errorMsg, setErrorMessage] = useState("");
 
   useEffect(() => {
-    if (interview && (mode === EMPTY || mode === SAVING)) {
+    if (interview && mode === EMPTY) {
       transition(SHOW);
     }
-    if (interview === null && (mode === SHOW || mode === DELETING)) {
+    if (interview === null && mode === SHOW) {
       transition(EMPTY);
     }
-
-    // Set up error display for webSocket timeout
-    let waitForWebSocket;
-
-    if (mode === SAVING || mode === DELETING) {
-      waitForWebSocket = setTimeout(() => {
-        setErrorMessage("Server Response took too long");
-        transition(mode === SAVING ? ERROR_SAVE : ERROR_DELETE);
-      }, 3000);
-    }
-
-    const cleanup = () => clearTimeout(waitForWebSocket);
-
-    return cleanup;
   }, [interview, transition, mode]);
 
   const save = (name, interviewer) => {
@@ -64,18 +50,26 @@ const Appointment = ({
       interviewer,
     };
 
-    bookInterview(id, interview).catch((err) => {
-      setErrorMessage(err.message);
-      transition(ERROR_SAVE, true);
-    });
+    bookInterview(id, interview)
+      .then(() => {
+        transition(SHOW);
+      })
+      .catch((err) => {
+        setErrorMessage(err.message);
+        transition(ERROR_SAVE, true);
+      });
   };
 
   const deleteInterview = () => {
     transition(DELETING, true);
-    cancelInterview(id).catch((err) => {
-      setErrorMessage(err.message);
-      transition(ERROR_DELETE, true);
-    });
+    cancelInterview(id)
+      .then(() => {
+        transition(EMPTY);
+      })
+      .catch((err) => {
+        setErrorMessage(err.message);
+        transition(ERROR_DELETE, true);
+      });
   };
 
   return (
