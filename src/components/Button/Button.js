@@ -1,14 +1,18 @@
 import React from "react";
-import classNames from 'classnames';
+import classNames from "classnames";
 import "./Button.scss";
 
 export default function Button(props) {
-
-   return <button 
-      disabled={props.disabled} 
-      className={ classNames('button', 
-         {'button--confirm': props.confirm, 'button--danger': props.danger}) } 
-      onClick={ props.onClick }>
-         {props.children}
-      </button>;
+  return (
+    <button
+      disabled={props.disabled}
+      className={classNames("button", {
+        "button--confirm": props.confirm,
+        "button--danger": props.danger,
+      })}
+      onClick={props.onClick}
+    >
+      {props.children}
+    </button>
+  );
 }

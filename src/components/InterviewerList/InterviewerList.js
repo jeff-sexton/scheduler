@@ -28,7 +28,7 @@ const InterviewerList = ({ interviewers, value, onChange }) => {
 
 InterviewerList.propTypes = {
   value: PropTypes.number,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };
 
 export default InterviewerList;

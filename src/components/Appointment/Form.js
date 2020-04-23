@@ -13,7 +13,7 @@ const Form = ({ name, interviewers, value, onSave, onCancel }) => {
       setError("Student name cannot be blank");
       return;
     }
-    setError("")
+    setError("");
     onSave(studentName, selectedInterviewer);
   };
 

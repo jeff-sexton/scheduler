@@ -1,3 +1,3 @@
-import DayList from './DayList';
+import DayList from "./DayList";
 
 export default DayList;

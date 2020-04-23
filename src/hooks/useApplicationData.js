@@ -95,48 +95,20 @@ const useApplicationData = () => {
     return axios.get("/api/days").then(({ data: days }) => days);
   };
 
-  const calcUpdatedDays = ({ id, step }) => {
-    return state.days.map((day) => {
-      if (day.appointments.includes(id)) {
-        return {
-          ...day,
-          appointments: [...day.appointments],
-          interviewers: [...day.interviewers],
-          spots: day.spots + step,
-        };
-      }
-      return {
-        ...day,
-        appointments: [...day.appointments],
-        interviewers: [...day.interviewers],
-      };
-    });
-  };
-
-  // hangle appointment updates with the api server
+  // handle appointment updates with the api server
   const updateAppointment = (id, interview = null, method) => {
     const appointment = {
       ...state.appointments[id],
       interview,
     };
 
-    return (
-      axios[method](`/api/appointments/${appointment.id}`, appointment)
-
-        // local spots calculation
-        // .then(() => {
-        //   const days = interview ? calcUpdatedDays(id, -1) : calcUpdatedDays(id, +1);
-        //   dispatch({type: SET_INTERVIEW, value: {id, interview, days}});
-        // })
-
-        // do we need to dispatch here if we expect a websocket response??
-        .then(() => {
-          return updateDays();
-        })
-        .then((days) =>
-          dispatch({ type: SET_INTERVIEW, value: { id, interview, days } })
-        )
-    );
+    return axios[method](`/api/appointments/${appointment.id}`, appointment)
+      .then(() => {
+        return updateDays();
+      })
+      .then((days) =>
+        dispatch({ type: SET_INTERVIEW, value: { id, interview, days } })
+      );
   };
 
   // Update the interview in an appointment slot - either create a new appointment or update an existing one

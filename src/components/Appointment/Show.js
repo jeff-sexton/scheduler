@@ -1,7 +1,6 @@
-import React from 'react';
+import React from "react";
 
-const Show = ({student, interviewer, onEdit, onDelete}) => {
-
+const Show = ({ student, interviewer, onEdit, onDelete }) => {
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
@@ -28,8 +27,7 @@ const Show = ({student, interviewer, onEdit, onDelete}) => {
         </section>
       </section>
     </main>
-  )
+  );
 };
 
 export default Show;
-

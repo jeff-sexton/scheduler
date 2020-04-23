@@ -1,7 +1,6 @@
-import React from 'react';
+import React from "react";
 
-const Status = ({message}) => {
-
+const Status = ({ message }) => {
   return (
     <main className="appointment__card appointment__card--status">
       <img
@@ -11,7 +10,7 @@ const Status = ({message}) => {
       />
       <h1 className="text--semi-bold">{message}</h1>
     </main>
-  )
+  );
 };
 
 export default Status;

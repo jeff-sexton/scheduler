@@ -56,7 +56,7 @@ const Appointment = ({
       })
       .catch((err) => {
         const message = err && err.message;
-        setErrorMessage(message || 'Whoops');
+        setErrorMessage(message || "Whoops");
         transition(ERROR_SAVE, true);
       });
   };
@@ -69,7 +69,7 @@ const Appointment = ({
       })
       .catch((err) => {
         const message = err && err.message;
-        setErrorMessage(message || 'Whoops');
+        setErrorMessage(message || "Whoops");
         transition(ERROR_DELETE, true);
       });
   };

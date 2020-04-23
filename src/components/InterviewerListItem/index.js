@@ -1,4 +1,3 @@
-import InterviewerListItem from './InterviewerListItem'
-
+import InterviewerListItem from "./InterviewerListItem";
 
 export default InterviewerListItem;
