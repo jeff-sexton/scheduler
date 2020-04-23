@@ -56,10 +56,6 @@ const useApplicationData = () => {
       "JSON"
     );
 
-    apiSocket.onopen = function (event) {
-      apiSocket.send("ping");
-    };
-
     apiSocket.onmessage = function (event) {
       const { type, id, interview } = JSON.parse(event.data);
 
