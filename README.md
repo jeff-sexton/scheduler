@@ -10,8 +10,10 @@ The final project has been hosted at https://practical-wescoff-763560.netlify.ap
 
 ## Final Product
 
-!["Create Page"](https://raw.githubusercontent.com/jeff-sexton/scoodle/master/docs/Schoodle_Create_Page.png)
-!["Event Page"](https://raw.githubusercontent.com/jeff-sexton/scoodle/master/docs/Schoodle_Event_Page.png)
+!["Appointment Display"](https://raw.githubusercontent.com/jeff-sexton/scheduler/master/docs/Appointment_display.png)
+!["Booking Interview"](https://raw.githubusercontent.com/jeff-sexton/scheduler/master/docs/Booking_interview.png)
+!["Edit or Delete Interview"](https://raw.githubusercontent.com/jeff-sexton/scheduler/master/docs/EditDelete_interview.png)
+!["Delete Confirmation"](https://raw.githubusercontent.com/jeff-sexton/scheduler/master/docs/Delete_confirmation.png)
 
 ## Dependencies
 
