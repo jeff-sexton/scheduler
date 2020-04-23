@@ -23,10 +23,6 @@ beforeEach(() => {
 
 afterEach(cleanup);
 
-it.skip("renders without crashing", () => {
-  render(<Application />);
-});
-
 describe("Application", () => {
   it("defaults to Current weekday and changes the schedule when a new day is selected", async () => {
     const { getByText } = render(<Application />);
